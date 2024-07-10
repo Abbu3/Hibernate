@@ -1,0 +1,94 @@
+package com.java.Hibernate;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+@Entity
+public class Product {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int pId;
+	private String pName;
+	private double price;
+	public int getpId() {
+		return pId;
+	}
+	public void setpId(int pId) {
+		this.pId = pId;
+	}
+	public String getpName() {
+		return pName;
+	}
+	public void setpName(String pName) {
+		this.pName = pName;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	public Product() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public String toString() {
+		return "Product[pId = " + pId + ", " + pName + ", " + price + "]";
+	}
+}
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate</property>
+		<property name="hibernate.connection.user">root</property>
+		<property name="hibernate.connection.password">abbu123</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.show_sql">true</property>
+		<mapping class="com.java.Hibernate.Product"/>
+	</session-factory>
+</hibernate-configuration>
+
+
+package com.java.Hibernate;
+import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+        Product product = new Product();
+        product.setpId(1);
+        product.setpName("Samsung");
+        product.setPrice(45632.45);
+        Product product1 = new Product();
+        product1.setpId(2);
+        product1.setpName("Oppo");
+        product1.setPrice(35632.45);
+        Product product2 = new Product();
+        product2.setpId(3);
+        product2.setpName("Realme");
+        product2.setPrice(31332.45);
+        Product product3 = new Product();
+        product3.setpId(4);
+        product3.setpName("Samsung");
+        product3.setPrice(45632.45);
+        Configuration configuration = new Configuration();
+        configuration.configure("com/java/Hibernate/Hibernate.cfg.xml");
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        Session openSession = sessionFactory.openSession();    
+        List list = openSession.createQuery("from Product").list();
+        System.out.println(list);    
+    }
+}
+
+
