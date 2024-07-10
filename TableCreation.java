@@ -1,5 +1,4 @@
 package com.Java_Hibernate;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
